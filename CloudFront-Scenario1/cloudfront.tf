@@ -94,3 +94,8 @@ resource "aws_cloudfront_distribution" "content_distribution" {
     cloudfront_default_certificate = true
   }
 }
+
+output "cloudfront_url" {
+  description = "The URL of the CloudFront distribution"
+  value       = "https://${aws_cloudfront_distribution.content_distribution.domain_name}/"
+}
