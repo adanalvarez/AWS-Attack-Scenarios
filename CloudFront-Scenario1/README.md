@@ -1,4 +1,4 @@
-# CloudFront Scenario 1
+# CloudFront - Cookie Theft via CloudFront Function
 
 ## Overview
 

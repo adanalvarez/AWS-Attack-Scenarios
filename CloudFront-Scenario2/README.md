@@ -1,4 +1,4 @@
-# CloudFront Scenario 2: Exploiting AWS Lambda Function
+# CloudFront - Data Exfiltration via Lambda Function Modification
 
 ## Overview
 
