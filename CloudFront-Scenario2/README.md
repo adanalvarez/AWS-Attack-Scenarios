@@ -58,6 +58,10 @@ The goal of this exercise is to demonstrate how attackers might harm an AWS infr
 
 From this point on, all user requests routed through CloudFront will also be sent to the specified `MALICIOUS_IP`.
 
+## Understanding the Attack
+
+The modified Lambda function now acts as a data exfiltration point. Every request processed by this function sends a copy of the event data to an external server (`MALICIOUS_IP`).
+
 ## Cleanup
 
 To avoid incurring additional charges, ensure you destroy the Terraform-managed resources once done:
