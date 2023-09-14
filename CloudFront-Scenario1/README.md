@@ -32,7 +32,7 @@ This setup deploys an AWS CloudFront distribution backed by an S3 bucket. The bu
 
 ## Attacking the Infrastructure
 
-The goal of this exercise is to demonstrate how attackers might harm an AWS infrastructure as detailed in the article:
+The goal of this exercise is to demonstrate how attackers might harm an AWS infrastructure as detailed in the article: https://medium.com/@adan.alvarez/how-attackers-can-misuse-aws-cloudfront-access-to-make-it-rain-cookies-acf9ce87541c
 
 1. **Create a new CloudFront Function**:
     - Use the code from `SampleAttackCode/function.js`.
