@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Random Cookie</title>
+	<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #777;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        .btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // Generate a random value for the cookie
+            var randomValue = Math.random().toString(36).substring(2);
+
+            // Set the cookie with the name 'session-id' and the random value
+            // This cookie will expire in 1 day
+            document.cookie = "session-id=" + randomValue + "; max-age=" + (24 * 60 * 60) + "; path=/";
+
+            // Display the set cookie value
+            document.getElementById('cookieValue').textContent = 'Set cookie: session-id=' + randomValue;
+        }
+    </script>
+</head>
+<body>
+	<div class="container">
+    <h2>Random Cookie Setter</h2>
+    <p id="cookieValue"></p>
+	
+	<a href="./index.html" class="btn">Go to the index</a>
+	</div>
+</body>
+</html>
