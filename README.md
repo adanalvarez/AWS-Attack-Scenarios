@@ -1,2 +1,16 @@
-# AWS-Attack-Scenarios
+# AWS Attack Scenarios
 A collection of real-world scenarios and code samples demonstrating potential exploitation techniques in AWS services. Designed for educational purposes and security awareness.
+
+## ⚠️ Disclaimer
+
+The content and techniques described here are meant strictly for educational and awareness purposes. Unauthorized use or misuse outside of a controlled environment can lead to legal consequences and potential harm. Always proceed with caution and obtain necessary permissions.
+
+## Scenarios Overview
+
+1. **Scenario 1 (Folder: CloudFront-Scenario1)**:
+    - **Description**: This scenario illustrates how an attacker can exploit a CloudFront setup to steal cookies from users. It employs a CloudFront function in conjunction with a simulated login page to demonstrate the theft.
+
+2. **Scenario 2 (Folder: CloudFront-Scenario2)**:
+    - **Description**: In this setup, an attacker exploits a Lambda function associated with a CloudFront distribution. The attacker modifies the Lambda function to exfiltrate user request data to an external server.
+
+(More scenarios will be added as the repository grows.)
