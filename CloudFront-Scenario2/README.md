@@ -38,6 +38,8 @@ This setup deploys an AWS CloudFront distribution backed by an S3 bucket. The bu
 
 6. **Access CloudFront**: After the second apply, accessing the CloudFront URL will lead you to `index.html`, the lambda will redirect you to `login.html`. The latter sets a random "cookie" to simulate a login page.
 
+![Initial infraestructure](CloudFront-LambdaEdge.gif)
+
 ## Attacking the Infrastructure
 
 The goal of this exercise is to demonstrate how attackers might harm an AWS infrastructure as detailed in the article:
@@ -57,6 +59,8 @@ The goal of this exercise is to demonstrate how attackers might harm an AWS infr
     - Update the CloudFront distribution to use this new version of the Lambda function.
 
 From this point on, all user requests routed through CloudFront will also be sent to the specified `MALICIOUS_IP`.
+
+![Attack infraestructure](CloudFrontAttack-LambdaEdge.gif)
 
 ## Understanding the Attack
 

@@ -28,6 +28,8 @@ This setup deploys an AWS CloudFront distribution backed by an S3 bucket. The bu
 
 4. **Access CloudFront**: After deployment, you'll receive a URL for the CloudFront distribution. Accessing it will lead you to `index.html`, which contains a link to `login.html`. The latter sets a random "cookie" to simulate a login page.
 
+![Initial infraestructure](CloudFront-Function.gif)
+
 ## Attacking the Infrastructure
 
 The goal of this exercise is to demonstrate how attackers might harm an AWS infrastructure as detailed in the article:
@@ -41,6 +43,8 @@ The goal of this exercise is to demonstrate how attackers might harm an AWS infr
 2. **Host the Redirect Script**:
     - On a public server (e.g., an AWS EC2 instance), start a web server to serve the `SampleAttackCode/redirectScript.js`.
     - Ensure you replace `MALICIOUS_IP` in the script with the IP of your server or another destination where you want to capture cookies.
+
+![Attack infraestructure](CloudFrontAttack-Function.gif)
 
 ## Understanding the Attack
 
