@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth Callback</title>
+</head>
+
+<body>
+    <h2>OAuth Callback Handler</h2>
+    <p><strong>Access Token:</strong></p>
+    <textarea id="tokenField" rows="10" cols="50">Exchanging code for token...</textarea>
+    <br>
+    <button onclick="window.location.href='index.html'">Go to Home</button>
+
+    <script>
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+        async function exchangeCodeForToken(code) {
+            const clientId = "COGNITO_APP_CLIENT_ID";  // replace with your Cognito App Client ID
+            const redirectUri = "http://localhost:8000/callback.html";  // replace with your callback URL
+            const tokenEndpoint = "https://APPSYNC_DOMAIN.auth.us-east-1.amazoncognito.com/oauth2/token";  // replace placeholders
+
+            const body = new URLSearchParams();
+            body.append('grant_type', 'authorization_code');
+            body.append('client_id', clientId);
+            body.append('redirect_uri', redirectUri);
+            body.append('code', code);
+
+            const response = await fetch(tokenEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: body.toString()
+            });
+            return response.json();
+        }
+
+        const code = new URL(window.location.href).searchParams.get('code');
+        if (code) {
+            exchangeCodeForToken(code).then(data => {
+                if (data && data.access_token) {
+                    document.getElementById('tokenField').value = data.access_token;
+                    setCookie("access_token", data.access_token, 1);
+                } else {
+                    document.getElementById('tokenField').value = "Failed to exchange code for token!";
+                }
+            });
+        } else {
+            document.getElementById('tokenField').value = "Code not found in the URL!";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+type CheckingAccount @aws_cognito_user_pools
+@aws_iam {
+	accountNumber: String!
+	username: String
+	balance: Float
+}
+
+input CheckingAccountInput {
+	accountNumber: String!
+	username: String
+	balance: Float
+}
+
+type MyAccountsResult @aws_cognito_user_pools {
+	savingAccounts: [SavingAccount]
+	checkingAccounts: [CheckingAccount]
+}
+
+type SavingAccount @aws_cognito_user_pools
+@aws_iam {
+	accountNumber: String!
+	username: String
+	balance: Float
+}
+
+input SavingAccountInput {
+	accountNumber: String!
+	username: String
+	balance: Float
+}
+
+type TransactionHistory {
+	transactionId: ID!
+	from: String
+	to: String
+	amount: Float
+}
+
+input TransactionInput {
+	savingAccountNumber: String!
+	checkingAccountNumber: String!
+	amount: Float!
+}
+
+type TransactionResult {
+	savingAccounts: [SavingAccount]
+	checkingAccounts: [CheckingAccount]
+	transactionHistory: [TransactionHistory]
+}
+
+type Mutation {
+	populateAccounts(savingAccounts: [SavingAccountInput], checkingAccounts: [CheckingAccountInput]): TransactionResult
+	transferMoney(transactions: [TransactionInput]): TransactionResult
+}
+
+type Query @aws_cognito_user_pools
+@aws_iam {
+	getAccounts(savingAccountNumbers: [String], checkingAccountNumbers: [String]): TransactionResult
+	getMyAccounts: MyAccountsResult
+}

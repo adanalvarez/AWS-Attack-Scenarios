@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <h2>Welcome</h2>
+    <div id="userInfo"></div>
+
+    <script>
+        function getCookie(name) {
+            const value = "; " + document.cookie;
+            const parts = value.split("; " + name + "=");
+            if (parts.length == 2) return parts.pop().split(";").shift();
+        }
+
+        function logout() {
+            // Delete the access token cookie
+            document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            // Redirect to Cognito logout endpoint
+            const cognitoLogoutUrl = `https://APPSYNC_DOMAIN.auth.us-east-1.amazoncognito.com/logout?client_id=COGNITO_APP_CLIENT_ID&logout_uri=http://localhost:8000/logouturl.html`; // replace placeholders
+            window.location.href = cognitoLogoutUrl;
+        }
+
+        async function fetchUserDetails(accessToken) {
+            const cognitoEndpoint = "https://APPSYNC_DOMAIN.auth.us-east-1.amazoncognito.com"; // replace placeholders
+            const response = await fetch(`${cognitoEndpoint}/oauth2/userInfo`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+            return response.json();
+        }
+
+        async function fetchAccountDetails(accessToken) {
+        const endpoint = "https://APPSYNC_ID.appsync-api.us-east-1.amazonaws.com/graphql";  // Replace with your AppSync endpoint URL
+        const query = `
+            query MyQuery {
+                getMyAccounts {
+                    savingAccounts {
+                        accountNumber
+                        balance
+                        username
+                    }
+                    checkingAccounts {
+                        accountNumber
+                        balance
+                        username
+                    }
+                }
+            }`;
+
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": accessToken
+            },
+            body: JSON.stringify({ query: query })
+        });
+        
+        const data = await response.json();
+        return data.data.getMyAccounts;
+    }
+
+    const token = getCookie("access_token");
+    if (token) {
+        fetchUserDetails(token).then(user => {
+            document.getElementById('userInfo').innerHTML = `Hello, ${user.username}`;
+            
+            // Fetch account details
+            fetchAccountDetails(token).then(accountDetails => {
+                const savingsHtml = accountDetails.savingAccounts.map(account => 
+                    `<div>Account Number: ${account.accountNumber}, Balance: ${account.balance}</div>`
+                ).join("");
+                const checkingsHtml = accountDetails.checkingAccounts.map(account => 
+                    `<div>Account Number: ${account.accountNumber}, Balance: ${account.balance}</div>`
+                ).join("");
+
+                document.getElementById('userInfo').innerHTML += `<h3>Savings Accounts</h3>${savingsHtml}<h3>Checking Accounts</h3>${checkingsHtml}<br><br><button onclick="logout()">Logout</button>`;
+            });
+        }).catch(err => {
+            document.getElementById('userInfo').textContent = "Failed to fetch user details!";
+        });
+    } else {
+        document.getElementById('userInfo').innerHTML = "Not Logged In<br><button onclick=\"window.location.href='https://APPSYNC_DOMAIN.auth.us-east-1.amazoncognito.com/oauth2/authorize?client_id=COGNITO_APP_CLIENT_ID&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fcallback.html'\">Login</button>"; // replace placeholders
+    }
+    </script>
+</body>
+
+</html>
