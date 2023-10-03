@@ -32,7 +32,8 @@ This setup deploys an AWS AppSync service, utilizing AWS IAM as the default auth
 
 Acces the AWS console, go to AWS AppSync and using the query option, execute the following mutation. Making sure to use the sub from Cognito as account name:
 
-```mutation populateAccounts {
+```
+mutation populateAccounts {
   populateAccounts (
     savingAccounts: [
       {accountNumber: "SUB_FROM_COGNITO", username: "Tom", balance: 100},
@@ -51,7 +52,8 @@ Acces the AWS console, go to AWS AppSync and using the query option, execute the
       accountNumber
     }
   }
-}```
+}
+```
 
 
 ## Attacking the Infrastructure
