@@ -19,4 +19,7 @@ The content and techniques described here are meant strictly for educational and
 4. **Persistence via AppSync Resolver Modification (Folder: AppSync-Scenario2)**:
     - **Description**: This scenario shows how an attacker can modify the resolvers from AppSync to provide unique functionality to a user-controlled by them.
 
+5. **Sensitive Data Access via ALB Rule Manipulation (Folder: ALB-Scenario1)**:
+    - **Description:** This scenario demonstrates how an attacker can manipulates ALB rules to inject malicious scripts and bypass authentication, leading to unauthorized access and exfiltration of sensitive user data.
+
 (More scenarios will be added as the repository grows.)
