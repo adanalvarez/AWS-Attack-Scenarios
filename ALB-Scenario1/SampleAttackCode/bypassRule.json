@@ -1,0 +1,11 @@
+[
+    {
+      "Field": "http-header",
+      "HttpHeaderConfig": {
+        "HttpHeaderName": "Bypass",
+        "Values": [
+          "true"
+        ]
+      }
+    }
+]

